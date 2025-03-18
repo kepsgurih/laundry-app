@@ -15,11 +15,9 @@ interface NavItem {
 
 interface BottomNavProps {
     navItems: NavItem[]
-    activeTab: string
-    setActiveTab: (tab: string) => void
 }
 
-export default function BottomNav({ navItems, activeTab, setActiveTab }: BottomNavProps) {
+export default function BottomNav({ navItems }: BottomNavProps) {
     const pathname = usePathname()
 
     return (
@@ -27,7 +25,6 @@ export default function BottomNav({ navItems, activeTab, setActiveTab }: BottomN
             <div className="flex justify-between items-center px-6 py-2 max-w-md mx-auto relative">
                 {navItems.map((item) => {
                     const Icon = item.icon
-                    const isActive = pathname.includes(item.url)
                     const isNewButton = item.url === "/apps/new-order"
 
                     if (isNewButton) {

@@ -1,5 +1,5 @@
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
  
@@ -8,10 +8,32 @@ generator client {
 }
  
 model User {
-  id       String  @id @default(cuid())
-  name     String?
-  email    String  @unique
-  avatar   String?
-  password String?
-  createdAt DateTime @default(now())
+  id        String        @id @default(auto()) @map("_id") @db.ObjectId
+  name      String?
+  email     String        @unique
+  roles     String        @default("USER")
+  avatar    String?
+  password  String?
+  createdAt DateTime      @default(now())
+
+  group     Organization?  @relation(fields: [groupId], references: [id])
+  groupId   String?        @db.ObjectId
+}
+
+model Organization {
+  id        String        @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  slug      String        @unique
+  address   Address?
+  updateAt  DateTime      @default(now())
+  createdAt DateTime      @default(now())
+
+  users     User[]
+}
+
+type Address {
+  street String
+  city   String
+  state  String
+  zip    String
 }

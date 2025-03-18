@@ -6,7 +6,7 @@ import { Shirt } from "lucide-react"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
 import { Route } from "next"
-import { useSession } from "next-auth/react"
+import UserInfo from "./user-info"
 
 interface NavItem {
     url: string
@@ -54,19 +54,7 @@ export default function Sidebar({ navItems }: SidebarProps) {
                     })}
                 </ul>
             </nav>
-
-            {/* User info at bottom */}
-            <div className="p-4 border-t border-gray-200">
-                <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
-                        <span className="font-medium">JD</span>
-                    </div>
-                    <div>
-                        <p className="font-medium">John Doe</p>
-                        <p className="text-xs text-gray-500">Premium Member</p>
-                    </div>
-                </div>
-            </div>
+            <UserInfo />
         </div>
     )
 }

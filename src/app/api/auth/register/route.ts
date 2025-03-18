@@ -19,8 +19,14 @@ export async function POST(req: Request) {
 
         const hashedPassword = await hash(password, 10);
         const newUser = await prisma.user.create({
-            data: { name, email, password: hashedPassword, avatar: 'https://via.placeholder.com/150' },
-        });
+            data: {
+                name,
+                email,
+                password: hashedPassword,
+                avatar: `https://api.dicebear.com/9.x/fun-emoji/svg?seed=${email}`,
+                roles: "admin",
+            }
+        })
 
         return NextResponse.json({ message: "User berhasil dibuat", user: newUser });
     } catch (error) {

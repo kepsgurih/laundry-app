@@ -35,6 +35,9 @@ const authOptions: AuthOptions = {
           id: user.id,
           name: user.name ?? "Unknown",
           email: user.email,
+          avatar: user.avatar ?? '',
+          roles: user.roles,
+          groupId: user.groupId ?? "",
         };
       },
     }),
@@ -46,12 +49,22 @@ const authOptions: AuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.name = user.name;
+        token.avatar = user.avatar;
+        token.email = user.email;
+        token.roles = user.roles;
+        token.groupId = user.groupId;
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
+        session.user.name = token.name as string;
+        session.user.avatar = token.avatar as string;
+        session.user.email = token.email as string;
+        session.user.roles = token.roles as string;
+        session.user.groupId = token.groupId as string;
       }
       return session;
     },
